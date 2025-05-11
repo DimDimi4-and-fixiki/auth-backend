@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  notifier:
+    image: dimakalinin/dima-portal-api:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_PASSWORD: "notify"
+      POSTGRES_USER: "notify"
+      POSTGRES_DB: "notify"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+      TZ: Europe/Moscow
+    ports:
+      - "5432:5432"
+    volumes:
+      - /pgpg-data:/var/lib/postgresql/data
+    command: -c fsync=off -c full_page_writes=off
