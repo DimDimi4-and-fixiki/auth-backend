@@ -1,0 +1,31 @@
+# Binaries for programs and plugins
+/bin/
+/gen/
+
+# Build directories
+/build/
+/dist/
+
+# Output of the go coverage tool
+*.out
+
+# Dependency directories
+/vendor/
+
+# Go workspace file
+go.work
+
+# IDE and editor specific files
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Application specific
+.env

@@ -1,0 +1,41 @@
+version: v1
+
+plugins:
+    - name: go
+      out: internal/gen/go
+      opt:
+        - paths=source_relative
+      path: bin/protoc-gen-go
+      strategy: directory
+    - name: grpc-gateway
+      out: internal/gen/go
+      opt:
+        - logtostderr=true
+        - paths=source_relative
+        - generate_unbound_methods=true
+      path: bin/protoc-gen-grpc-gateway
+      strategy: directory
+    - name: openapiv2
+      out: internal/gen/go
+      opt:
+        - generate_unbound_methods=true
+      path: bin/protoc-gen-openapiv2
+      strategy: directory
+    - name: go-vtproto
+      out: internal/gen/go
+      opt:
+        - features=marshal+unmarshal+size+pool+grpc
+        - paths=source_relative
+      path: bin/protoc-gen-go-vtproto
+      strategy: directory
+    - name: validate
+      out: internal/gen/go
+      opt:
+        - lang=go
+        - paths=source_relative
+      path: bin/protoc-gen-validate
+      strategy: directory
+    - name: goclay
+      out: internal
+      path: bin/protoc-gen-goclay
+      strategy: directory

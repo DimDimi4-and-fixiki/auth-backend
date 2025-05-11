@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package auth_backend.auth_api;
+option go_package = "github.com/DimDimi4-and-fixiki/auth-back/auth-api";
+import "api/google/api/annotations.proto";
+import "api/validate/validate.proto";
+import "api/google/api/field_behavior.proto";
+
+service AuthService {
+    rpc RegisterUser (RegisterUserRequest) returns (RegisterUserResponse) {
+        option (google.api.http) = {
+            post: "/v1/auth/register"
+            body: "*"
+        };
+    }
+}
+
+message RegisterUserRequest {
+    string username = 1 [(validate.rules).string = {min_len: 3, max_len: 20}];
+    string password = 2 [(validate.rules).string = {min_len: 8, max_len: 20}];
+    string email = 3 [(validate.rules).string = {pattern: "^\\S+@\\S+\\.\\S+$"}];
+    string phone = 4 [(validate.rules).string = {pattern: "^\\+?[0-9]{10,15}$"}];
+}
+
+message RegisterUserResponse {
+    string user_id = 1 [(google.api.field_behavior) = REQUIRED];
+    Status status = 2 [(google.api.field_behavior) = REQUIRED];
+
+    message Status {
+        enum StatusCode {
+            OK = 0;
+            USERNAME_TAKEN = 1;
+            EMAIL_TAKEN = 2;
+            PHONE_TAKEN = 3;
+            INVALID_INPUT = 4;
+        }
+        StatusCode code = 1 [(google.api.field_behavior) = REQUIRED];
+        string message = 2 [(google.api.field_behavior) = REQUIRED];
+    }
+}
